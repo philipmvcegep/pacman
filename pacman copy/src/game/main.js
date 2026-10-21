@@ -29,6 +29,11 @@ const gameData = {
 let animationFrameId = null;
 let tileSize = 20;
 
+const TARGET_FPS = 60;
+const timeStep = 1000 / TARGET_FPS;
+let lastTime = 0;
+let accumulator = 0;
+
 function resizeCanvas() {
     const container = canvas.parentElement;
     canvas.width = container.clientWidth;
@@ -70,7 +75,7 @@ function resetPlayerPosition() {
     player.dx = 0;
     player.dy = 0;
     player.nextDx = 0;
-    player.nextY = 0;
+    player.nextDy = 0;
 }
 
 function initGame() {
@@ -110,12 +115,21 @@ function draw() {
     drawGame(ctx, tileSize, gameData);
 }
 
-function gameLoop() {
-    update();
-    draw();
-    if (gameData.gameState === 'PLAYING') {
-        animationFrameId = requestAnimationFrame(gameLoop);
+function gameLoop(timestamp) {
+    if (gameData.gameState !== 'PLAYING') return;
+    const deltaTime = timestamp - lastTime;
+    lastTime = timestamp;
+
+    accumulator += deltaTime;
+
+    while (accumulator >= timeStep) {
+        update();
+        accumulator -= timeStep;
     }
+
+    draw();
+
+    animationFrameId = requestAnimationFrame(gameLoop);
 }
 
 function showOverlay(title, desc, btnText) {
@@ -137,6 +151,10 @@ actionBtn.addEventListener('click', () => {
     initGame();
     gameData.gameState = 'PLAYING';
     cancelAnimationFrame(animationFrameId);
+
+    lastTime = performance.now();
+    accumulator = 0;
+
     animationFrameId = requestAnimationFrame(gameLoop);
 });
 
