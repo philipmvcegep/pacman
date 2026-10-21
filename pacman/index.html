@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcade Mini Pac-Man | Modular</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        .arcade-font {
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        canvas {
+            image-rendering: pixelated;
+            touch-action: none;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-slate-950 text-white font-sans select-none min-h-screen flex flex-col justify-between items-center p-2 sm:p-4">
+
+    <header
+        class="w-full max-w-xl bg-slate-900 border-4 border-yellow-500 rounded-xl p-3 sm:p-4 mb-2 shadow-[0_0_15px_rgba(234,179,8,0.3)] flex flex-wrap justify-between items-center gap-3">
+        <div class="flex items-center gap-2">
+            <span class="text-yellow-400 arcade-font text-xs sm:text-sm">SCORE:</span>
+            <span id="score-display" class="text-white arcade-font text-xs sm:text-sm font-bold">0</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-red-400 arcade-font text-xs sm:text-sm">LIVES:</span>
+            <span id="lives-display" class="text-white arcade-font text-xs sm:text-sm font-bold">3</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-cyan-400 arcade-font text-xs sm:text-sm">ITEMS:</span>
+            <span id="items-display" class="text-white arcade-font text-xs sm:text-sm font-bold">0/0</span>
+        </div>
+    </header>
+
+    <main class="relative w-full max-w-xl flex-grow flex justify-center items-center my-1">
+        <div
+            class="relative bg-black border-4 border-blue-600 rounded-xl overflow-hidden shadow-2xl w-full aspect-[4/3] flex justify-center items-center">
+            <canvas id="gameCanvas" class="w-full h-full block bg-black"></canvas>
+
+            <div id="overlay"
+                class="absolute inset-0 bg-black/85 flex flex-col justify-center items-center p-6 text-center z-10 transition-all duration-300">
+                <h1 id="overlay-title"
+                    class="text-yellow-400 arcade-font text-lg sm:text-2xl mb-4 drop-shadow-[0_2px_10px_rgba(234,179,8,0.8)]">
+                    MINI PAC-MAN</h1>
+                <p id="overlay-desc" class="text-slate-300 text-xs sm:text-sm mb-6 max-w-sm leading-relaxed">
+                    Use Arrow Keys, WASD, or Touch D-Pad to move. Eat power pellets to make ghosts vulnerable!
+                </p>
+                <button id="action-btn"
+                    class="bg-yellow-500 hover:bg-yellow-400 text-slate-950 arcade-font text-xs sm:text-sm px-6 py-3 rounded-lg font-bold shadow-lg transform active:scale-95 transition-transform cursor-pointer">
+                    START GAME
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full max-w-xl mt-2 flex flex-col items-center gap-1">
+        <div class="text-slate-400 text-[10px] sm:text-xs arcade-font tracking-wider">CONTROLS</div>
+        <div class="grid grid-cols-3 gap-2 w-48 sm:w-56">
+            <!-- Row 1: UP -->
+            <div></div>
+            <button id="btn-up"
+                class="bg-slate-900 hover:bg-slate-800 active:bg-yellow-500 active:text-slate-950 border-2 border-slate-700 hover:border-yellow-500 rounded-xl aspect-square flex items-center justify-center text-yellow-400 text-xl font-bold shadow-md transition-all cursor-pointer"
+                style="font-variant-emoji: text;">▲</button>
+            <div></div>
+
+            <!-- Row 2: LEFT, DOWN, RIGHT -->
+            <button id="btn-left"
+                class="bg-slate-900 hover:bg-slate-800 active:bg-yellow-500 active:text-slate-950 border-2 border-slate-700 hover:border-yellow-500 rounded-xl aspect-square flex items-center justify-center text-yellow-400 text-xl font-bold shadow-md transition-all cursor-pointer"
+                style="font-variant-emoji: text;">◀</button>
+
+            <button id="btn-down"
+                class="bg-slate-900 hover:bg-slate-800 active:bg-yellow-500 active:text-slate-950 border-2 border-slate-700 hover:border-yellow-500 rounded-xl aspect-square flex items-center justify-center text-yellow-400 text-xl font-bold shadow-md transition-all cursor-pointer"
+                style="font-variant-emoji: text;">▼</button>
+
+            <button id="btn-right"
+                class="bg-slate-900 hover:bg-slate-800 active:bg-yellow-500 active:text-slate-950 border-2 border-slate-700 hover:border-yellow-500 rounded-xl aspect-square flex items-center justify-center text-yellow-400 text-xl font-bold shadow-md transition-all cursor-pointer"
+                style="font-variant-emoji: text;">▶</button>
+        </div>
+    </footer>
+
+    <!-- Load the modular orchestrator -->
+    <script type="module" src="./main.js"></script>
+</body>
+
+</html>
